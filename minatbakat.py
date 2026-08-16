@@ -16,74 +16,27 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    .stApp {
-        background-color: #f8fafc;
-        font-family: 'Inter', 'Segoe UI', sans-serif;
-    }
+    .stApp { background-color: #f8fafc; font-family: 'Inter', 'Segoe UI', sans-serif; }
     .main-header {
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 24px 30px;
-        border-radius: 12px;
-        color: white;
-        margin-bottom: 25px;
+        padding: 24px 30px; border-radius: 12px; color: white; margin-bottom: 25px;
         box-shadow: 0 4px 20px rgba(30, 58, 138, 0.15);
     }
-    .main-header h1 {
-        color: white !important;
-        font-size: 24px;
-        margin: 0 0 6px 0;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-    .main-header p {
-        color: #e0f2fe;
-        margin: 0;
-        font-size: 13px;
-        opacity: 0.9;
-    }
+    .main-header h1 { color: white !important; font-size: 24px; margin: 0 0 6px 0; font-weight: 700; }
+    .main-header p { color: #e0f2fe; margin: 0; font-size: 13px; opacity: 0.9; }
     .metric-card {
-        background: white;
-        padding: 16px 20px;
-        border-radius: 10px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        text-align: center;
+        background: white; padding: 16px 20px; border-radius: 10px;
+        border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: center;
     }
-    .metric-card .title {
-        font-size: 12px;
-        color: #64748b;
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-    }
-    .metric-card .value {
-        font-size: 20px;
-        color: #1e3a8a;
-        font-weight: 700;
-    }
+    .metric-card .title { font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
+    .metric-card .value { font-size: 18px; color: #1e3a8a; font-weight: 700; }
     .stTabs [data-baseweb="tab-list"] { gap: 8px; background-color: transparent; }
     .stTabs [data-baseweb="tab"] {
-        height: 45px;
-        background-color: white;
-        border-radius: 8px 8px 0 0;
-        border: 1px solid #e2e8f0;
-        padding: 0 20px;
-        font-weight: 600;
-        color: #475569;
+        height: 45px; background-color: white; border-radius: 8px 8px 0 0;
+        border: 1px solid #e2e8f0; padding: 0 20px; font-weight: 600; color: #475569;
     }
-    .stTabs [aria-selected="true"] {
-        background-color: #1e3a8a !important;
-        color: white !important;
-        border-color: #1e3a8a !important;
-    }
-    .content-box {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        margin-bottom: 20px;
-    }
+    .stTabs [aria-selected="true"] { background-color: #1e3a8a !important; color: white !important; border-color: #1e3a8a !important; }
+    .content-box { background: white; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 20px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -101,10 +54,9 @@ KATEGORI_RIMI_KEYS = ["logika_matematika", "linguistik", "interpersonal", "spasi
 KATEGORI_RIMI_LABEL = ["Logika-Matematika", "Linguistik", "Interpersonal", "Spasial", "Intrapersonal", "Kinestetik", "Musikal", "Naturalistik"]
 
 RIASEC_KEYS = ["i", "a", "s", "r", "c", "e"]
-RIASEC_LABEL = ["Investigative (Analitis)", "Artistic (Kreatif)", "Social (Sosial)", "Realistic (Praktis)", "Conventional (Terstruktur)", "Enterprising (Wirausaha)"]
 
 # -----------------------------------------------------------------------------
-# 3. HELPER FUNCTIONS & DEMO ENGINE
+# 3. HELPER FUNCTIONS SMART SKORING
 # -----------------------------------------------------------------------------
 def generate_dummy_data():
     np.random.seed(42)
@@ -119,8 +71,8 @@ def generate_dummy_data():
         "ekskul_1": ["KIR / Klub Sains", "Futsal", "Seni Tari", "English Club", "Jurnalistik"],
         "ekskul_2": ["English Debate Club", "Robotika", "Paduan Suara", "PMR", "Fotografi"],
         "ekskul_3": ["Paduan Suara", "Paskibra", "Basket", "KIR", "Pramuka"],
-        "alasan_ekskul": ["Suka kegiatan & mendukung cita-cita", "Hobi", "Mengembangkan bakat", "Ingin belajar hal baru", "Dukungan teman"],
-        "prestasi": ["Juara 2 Lomba Cerdas Cermat IPA tingkat Kota Bandung (2025)", "Tidak Ada", "Juara 1 Tari", "Tidak Ada", "Juara 2 Menulis"],
+        "alasan_ekskul": ["Suka kegiatan & mendukung cita-cita"] * n,
+        "prestasi": ["Juara 2 Lomba Cerdas Cermat IPA Kota Bandung", "Tidak Ada", "Juara 1 Tari", "Tidak Ada", "Juara 2 Menulis"],
         
         "riasec_i": [6, 3, 2, 5, 4], "riasec_a": [5, 2, 6, 3, 6], "riasec_s": [4, 5, 4, 6, 3],
         "riasec_r": [3, 6, 2, 2, 1], "riasec_c": [3, 4, 3, 3, 4], "riasec_e": [2, 3, 2, 4, 2],
@@ -135,14 +87,33 @@ def generate_dummy_data():
     return pd.DataFrame(data)
 
 def get_holland_code(row):
-    scores = {k.upper(): row.get(f"riasec_{k}", 0) for k in RIASEC_KEYS}
+    # Cek apakah kolom riasec tersedia di dataset
+    has_riasec = any(f"riasec_{k}" in row.index for k in RIASEC_KEYS)
+    
+    if has_riasec:
+        scores = {k.upper(): float(row.get(f"riasec_{k}", 0)) for k in RIASEC_KEYS}
+    else:
+        # Peta darurat jika pakai template lama (dihitung estimasi dari bakat RIMI)
+        scores = {
+            "I": float(row.get("bakat_logika_matematika", row.get("rimi_logika_matematika", 0))),
+            "A": float(row.get("bakat_musikal", row.get("rimi_musikal", 0)) + row.get("bakat_visual_spasial", row.get("rimi_spasial", 0))) / 2,
+            "S": float(row.get("bakat_interpersonal", row.get("rimi_interpersonal", 0))),
+            "R": float(row.get("bakat_kinestetik", row.get("rimi_kinestetik", 0))),
+            "C": float(row.get("bakat_intrapersonal", row.get("rimi_intrapersonal", 0))),
+            "E": float(row.get("bakat_linguistik", row.get("rimi_linguistik", 0)))
+        }
+    
     sorted_codes = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     return "-".join([code[0] for code in sorted_codes[:3]])
 
 def get_gaya_belajar_dominan(row):
-    v = row.get("gb_visual", 0)
-    a = row.get("gb_auditori", 0)
-    k = row.get("gb_kinestetik", 0)
+    v = float(row.get("gb_visual", row.get("bakat_visual_spasial", row.get("rimi_spasial", 0))))
+    a = float(row.get("gb_auditori", row.get("bakat_musikal", row.get("rimi_musikal", 0))))
+    k = float(row.get("gb_kinestetik", row.get("bakat_kinestetik", row.get("rimi_kinestetik", 0))))
+    
+    if v == 0 and a == 0 and k == 0:
+        return "Visual (Estimasi)"
+    
     if v > a and v > k: return "Visual"
     elif a > v and a > k: return "Auditori"
     elif k > v and k > a: return "Kinestetik"
@@ -150,6 +121,13 @@ def get_gaya_belajar_dominan(row):
     elif v == k and v > a: return "Visual-Kinestetik"
     elif a == k and a > v: return "Auditori-Kinestetik"
     else: return "Campuran (Seimbang)"
+
+def get_ekskul_utama(row):
+    # Ambil dari ekskul_1 atau minat_utama_1 (jika pakai template lama)
+    return str(row.get("ekskul_1", row.get("minat_utama_1", "-")))
+
+def get_ekskul_kedua(row):
+    return str(row.get("ekskul_2", row.get("minat_utama_2", "-")))
 
 def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
     title_target = {
@@ -160,8 +138,9 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
 
     holland_code = get_holland_code(siswa)
     gaya_belajar = get_gaya_belajar_dominan(siswa)
+    ekskul1 = get_ekskul_utama(siswa)
+    ekskul2 = get_ekskul_kedua(siswa)
 
-    # Perbaikan: Pengaksesan aman memakai .get() agar bebas dari KeyError
     nama = siswa.get('nama', '-')
     kelas = siswa.get('kelas', '-')
     sekolah = siswa.get('sekolah', 'SMP Bina Bangsa, Bandung')
@@ -206,8 +185,8 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
         <div class="section-title">1. RINGKASAN PILIHAN EKSTRAKURIKULER & CITA-CITA</div>
         <table>
             <tr><th>Prioritas Ekskul</th><th>Nama Kegiatan</th><th>Prestasi / Catatan Relevan</th></tr>
-            <tr><td>Pilihan Utama</td><td><b>{siswa.get('ekskul_1', '-')}</b></td><td>{siswa.get('prestasi', '-')}</td></tr>
-            <tr><td>Pilihan Kedua</td><td>{siswa.get('ekskul_2', '-')}</td><td>Cita-cita: {siswa.get('cita_cita', '-')}</td></tr>
+            <tr><td>Pilihan Utama</td><td><b>{ekskul1}</b></td><td>{siswa.get('prestasi', '-')}</td></tr>
+            <tr><td>Pilihan Kedua</td><td>{ekskul2}</td><td>Cita-cita: {siswa.get('cita_cita', '-')}</td></tr>
             <tr><td>Pilihan Ketiga</td><td>{siswa.get('ekskul_3', '-')}</td><td>-</td></tr>
         </table>
 
@@ -275,8 +254,8 @@ with tab2:
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("##### Sebaran Bakat RIMI Menonjol (> 27)")
-        bakat_counts = [(df[f"rimi_{k}"] > 27).sum() for k in KATEGORI_RIMI_KEYS if f"rimi_{k}" in df.columns]
-        fig = px.bar(x=KATEGORI_RIMI_LABEL, y=bakat_counts, color=KATEGORI_RIMI_LABEL, text_auto=True)
+        bakat_counts = [(df[f"rimi_{k}"] > 27).sum() if f"rimi_{k}" in df.columns else (df[f"bakat_{k}"] > 27).sum() for k in KATEGORI_RIMI_KEYS if f"rimi_{k}" in df.columns or f"bakat_{k}" in df.columns]
+        fig = px.bar(x=KATEGORI_RIMI_LABEL[:len(bakat_counts)], y=bakat_counts, color=KATEGORI_RIMI_LABEL[:len(bakat_counts)], text_auto=True)
         fig.update_layout(showlegend=False, height=320, margin=dict(l=10, r=10, t=20, b=10))
         st.plotly_chart(fig, use_container_width=True)
     with c2:
@@ -304,6 +283,8 @@ with tab3:
     
     h_code = get_holland_code(siswa_data)
     gb_dom = get_gaya_belajar_dominan(siswa_data)
+    eks_1 = get_ekskul_utama(siswa_data)
+    eks_2 = get_ekskul_kedua(siswa_data)
     
     sm1, sm2, sm3 = st.columns(3)
     with sm1:
@@ -311,7 +292,7 @@ with tab3:
     with sm2:
         st.markdown(f'<div class="metric-card"><div class="title">Gaya Belajar Dominan</div><div class="value" style="color:#2563eb;">{gb_dom}</div></div>', unsafe_allow_html=True)
     with sm3:
-        st.markdown(f'<div class="metric-card"><div class="title">Pilihan Ekskul Utama</div><div class="value" style="color:#059669; font-size:16px;">{siswa_data.get("ekskul_1", "-")}</div></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-card"><div class="title">Pilihan Ekskul Utama</div><div class="value" style="color:#059669; font-size:16px;">{eks_1}</div></div>', unsafe_allow_html=True)
     
     st.markdown("<br>", unsafe_allow_html=True)
     
@@ -319,7 +300,7 @@ with tab3:
 
 Kekuatan bakat Ananda yang paling menonjol berada pada aspek Logika-Matematika dan Linguistik.
 
-Kombinasi ini sangat mendukung pilihan ekstrakurikuler utama ({siswa_data.get('ekskul_1', '-')}), serta pilihan kedua ({siswa_data.get('ekskul_2', '-')}) sebagai wadah pengembangan potensi dan pencapaian cita-cita sebagai {siswa_data.get('cita_cita', '-')}.
+Kombinasi ini sangat mendukung pilihan ekstrakurikuler utama ({eks_1}), serta pilihan kedua ({eks_2}) sebagai wadah pengembangan potensi dan pencapaian cita-cita sebagai {siswa_data.get('cita_cita', '-')}.
 """
 
     catatan_psikolog = st.text_area("✍️ Draf Evaluasi Integratif Psikolog (Dapat Di-edit):", value=catatan_default, height=160)
