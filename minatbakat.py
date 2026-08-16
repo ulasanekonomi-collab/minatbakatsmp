@@ -43,7 +43,7 @@ st.markdown("""
 st.markdown("""
 <div class="main-header">
     <h1>📊 Dashboard Asesmen Minat, Bakat & Gaya Belajar</h1>
-    <p>Engine Pengolah Data & Workspace Layanan Psikolog | Biro Sarah Saputri Psikologi</p>
+    <p>Engine Pengolah Data & Workspace Layanan Psikolog | Biro  Saputri Psikologi</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -169,7 +169,7 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
     </head>
     <body>
         <button class="no-print btn-print" onclick="window.print()">🖨️ Cetak Laporan ({target_laporan})</button>
-        <div class="brand">Biro Sarah Saputri Psikologi • Layanan Asesmen Psikologis Peserta Didik</div>
+        <div class="brand">Biro  Saputri Psikologi • Layanan Asesmen Psikologis Peserta Didik</div>
         
         <div class="header">
             <h2>Laporan Hasil Asesmen Peserta Didik</h2>
@@ -178,7 +178,7 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
 
         <div class="box-info">
             <b>Nama Siswa:</b> {nama} | <b>Kelas:</b> {kelas} | <b>Sekolah:</b> {sekolah}<br>
-            <b>Usia:</b> {usia} tahun | <b>Tanggal Asesmen:</b> 10 Agustus 2026 | <b>Assessor:</b> Sarah Saputri, M.Psi., Psikolog<br>
+            <b>Usia:</b> {usia} tahun | <b>Tanggal Asesmen:</b> 10 Agustus 2026 | <b>Assessor:</b>  Saputri, M.Psi., Psikolog<br>
             <b>Kode Holland (RIASEC):</b> {holland_code} | <b>Gaya Belajar Dominan:</b> {gaya_belajar}
         </div>
 
@@ -200,7 +200,7 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
             <div style="text-align: center;">
                 <p>Bandung, 16 Agustus 2026<br>Assessor,</p>
                 <br><br>
-                <p><b>Sarah Saputri, M.Psi., Psikolog</b><br>Biro Sarah Saputri Psikologi</p>
+                <p><b>Sarah Saputri, M.Psi., Psikolog</b><br>SIPP: 20250159-2025-01-1298</p>
             </div>
         </div>
     </body>
