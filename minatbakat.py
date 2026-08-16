@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import streamlit.components.v1 as components
 
 # -----------------------------------------------------------------------------
-# 1. KONFIGURASI HALAMAN & CUSTOM CSS (DESIGN SYSTEM PRO)
+# 1. KONFIGURASI HALAMAN & CUSTOM CSS
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Dashboard Asesmen Minat, Bakat & Gaya Belajar SMP",
@@ -14,16 +14,12 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Styling (CSS Injection)
 st.markdown("""
 <style>
-    /* Main Background & Font */
     .stApp {
         background-color: #f8fafc;
         font-family: 'Inter', 'Segoe UI', sans-serif;
     }
-    
-    /* Custom Header Banner */
     .main-header {
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         padding: 24px 30px;
@@ -45,8 +41,6 @@ st.markdown("""
         font-size: 13px;
         opacity: 0.9;
     }
-
-    /* Metric Card Custom UI */
     .metric-card {
         background: white;
         padding: 16px 20px;
@@ -67,12 +61,7 @@ st.markdown("""
         color: #1e3a8a;
         font-weight: 700;
     }
-
-    /* Tabs Styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: transparent;
-    }
+    .stTabs [data-baseweb="tab-list"] { gap: 8px; background-color: transparent; }
     .stTabs [data-baseweb="tab"] {
         height: 45px;
         background-color: white;
@@ -87,8 +76,6 @@ st.markdown("""
         color: white !important;
         border-color: #1e3a8a !important;
     }
-
-    /* Card Box Container */
     .content-box {
         background: white;
         padding: 20px;
@@ -100,9 +87,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------------------------------------------------------
-# 2. BANNER HEADER
-# -----------------------------------------------------------------------------
 st.markdown("""
 <div class="main-header">
     <h1>📊 Dashboard Asesmen Minat, Bakat & Gaya Belajar</h1>
@@ -111,18 +95,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 3. PARAMETER STANDAR INSTRUMEN
+# 2. PARAMETER STANDAR INSTRUMEN
 # -----------------------------------------------------------------------------
 KATEGORI_RIMI_KEYS = ["logika_matematika", "linguistik", "interpersonal", "spasial", "intrapersonal", "kinestetik", "musikal", "naturalis"]
 KATEGORI_RIMI_LABEL = ["Logika-Matematika", "Linguistik", "Interpersonal", "Spasial", "Intrapersonal", "Kinestetik", "Musikal", "Naturalistik"]
-MAP_RIMI = dict(zip(KATEGORI_RIMI_KEYS, KATEGORI_RIMI_LABEL))
 
 RIASEC_KEYS = ["i", "a", "s", "r", "c", "e"]
 RIASEC_LABEL = ["Investigative (Analitis)", "Artistic (Kreatif)", "Social (Sosial)", "Realistic (Praktis)", "Conventional (Terstruktur)", "Enterprising (Wirausaha)"]
-MAP_RIASEC = dict(zip(RIASEC_KEYS, RIASEC_LABEL))
 
 # -----------------------------------------------------------------------------
-# 4. HELPER FUNCTIONS & DEMO ENGINE
+# 3. HELPER FUNCTIONS & DEMO ENGINE
 # -----------------------------------------------------------------------------
 def generate_dummy_data():
     np.random.seed(42)
@@ -179,11 +161,17 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
     holland_code = get_holland_code(siswa)
     gaya_belajar = get_gaya_belajar_dominan(siswa)
 
+    # Perbaikan: Pengaksesan aman memakai .get() agar bebas dari KeyError
+    nama = siswa.get('nama', '-')
+    kelas = siswa.get('kelas', '-')
+    sekolah = siswa.get('sekolah', 'SMP Bina Bangsa, Bandung')
+    usia = siswa.get('usia', '-')
+
     html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Laporan Asesmen - {siswa['nama']}</title>
+        <title>Laporan Asesmen - {nama}</title>
         <style>
             body {{ font-family: 'Segoe UI', Arial, sans-serif; margin: 25px; color: #1e293b; line-height: 1.5; }}
             .brand {{ color: #1e3a8a; font-size: 13px; font-weight: bold; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; }}
@@ -210,8 +198,8 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
         </div>
 
         <div class="box-info">
-            <b>Nama Siswa:</b> {siswa['nama']} | <b>Kelas:</b> {siswa['kelas']} | <b>Sekolah:</b> {siswa['sekolah']}<br>
-            <b>Usia:</b> {siswa['usia']} tahun | <b>Tanggal Asesmen:</b> 10 Agustus 2026 | <b>Assessor:</b> Sarah Saputri, M.Psi., Psikolog<br>
+            <b>Nama Siswa:</b> {nama} | <b>Kelas:</b> {kelas} | <b>Sekolah:</b> {sekolah}<br>
+            <b>Usia:</b> {usia} tahun | <b>Tanggal Asesmen:</b> 10 Agustus 2026 | <b>Assessor:</b> Sarah Saputri, M.Psi., Psikolog<br>
             <b>Kode Holland (RIASEC):</b> {holland_code} | <b>Gaya Belajar Dominan:</b> {gaya_belajar}
         </div>
 
@@ -242,7 +230,7 @@ def generate_pdf_html(siswa, target_laporan, catatan_psikolog):
     return html_content
 
 # -----------------------------------------------------------------------------
-# 5. SIDEBAR CONTROL PANEL
+# 4. SIDEBAR CONTROL PANEL
 # -----------------------------------------------------------------------------
 st.sidebar.markdown("### ⚙️ Control Panel Data")
 uploaded_file = st.sidebar.file_uploader("Upload File CSV/Excel IT", type=["csv", "xlsx"])
@@ -256,7 +244,7 @@ else:
     df = generate_dummy_data()
 
 # -----------------------------------------------------------------------------
-# 6. MAIN WORKSPACE WITH STYLED TABS
+# 5. MAIN WORKSPACE WITH STYLED TABS
 # -----------------------------------------------------------------------------
 tab1, tab2, tab3 = st.tabs([
     "🔍 Quality Control & Validasi Data", 
@@ -264,9 +252,6 @@ tab1, tab2, tab3 = st.tabs([
     "📝 Workspace & Generator Laporan"
 ])
 
-# =============================================================================
-# TAB 1: VALIDASI DATA & METRIC CARDS
-# =============================================================================
 with tab1:
     st.markdown('<div class="content-box">', unsafe_allow_html=True)
     st.markdown("#### Status Kebersihan Data Mentah")
@@ -283,9 +268,6 @@ with tab1:
     st.dataframe(df, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# =============================================================================
-# TAB 2: DASHBOARD SUMMARY
-# =============================================================================
 with tab2:
     st.markdown('<div class="content-box">', unsafe_allow_html=True)
     st.markdown("#### Rekapitulasi Profil Minat, Bakat & Gaya Belajar Kolektif")
@@ -307,9 +289,6 @@ with tab2:
         st.plotly_chart(fig_pie, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# =============================================================================
-# TAB 3: WORKSPACE REPORT GENERATOR
-# =============================================================================
 with tab3:
     st.markdown('<div class="content-box">', unsafe_allow_html=True)
     st.markdown("#### Generator Laporan Resmi 3 Varian Target")
@@ -323,7 +302,6 @@ with tab3:
         
     st.markdown("---")
     
-    # Ringkasan Metrics Siswa Selected
     h_code = get_holland_code(siswa_data)
     gb_dom = get_gaya_belajar_dominan(siswa_data)
     
@@ -337,8 +315,7 @@ with tab3:
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Auto Narasi Integratif Psikolog
-    catatan_default = f"""Berdasarkan hasil asesmen yang dilakukan, Ananda {siswa_data['nama']} menunjukkan kecenderungan minat utama pada tipe {h_code} serta preferensi gaya belajar {gb_dom}.
+    catatan_default = f"""Berdasarkan hasil asesmen yang dilakukan, Ananda {siswa_data.get('nama', '-')} menunjukkan kecenderungan minat utama pada tipe {h_code} serta preferensi gaya belajar {gb_dom}.
 
 Kekuatan bakat Ananda yang paling menonjol berada pada aspek Logika-Matematika dan Linguistik.
 
@@ -354,7 +331,7 @@ Kombinasi ini sangat mendukung pilihan ekstrakurikuler utama ({siswa_data.get('e
         st.download_button(
             label=f"📥 Download File HTML/PDF ({target_laporan})", 
             data=html_out, 
-            file_name=f"Laporan_{target_laporan.replace(' ', '_')}_{siswa_data['nama']}.html", 
+            file_name=f"Laporan_{target_laporan.replace(' ', '_')}_{siswa_data.get('nama', 'Siswa')}.html", 
             mime="text/html"
         )
         components.html(html_out, height=600, scrolling=True)
